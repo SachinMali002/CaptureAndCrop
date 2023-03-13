@@ -13,9 +13,17 @@ export class AppComponent {
   cropImgPreview: any = '';
   IsCapture = true;
   BtnCapture = "Capture";
-  // onFileChange(event: any): void {
-  //   this.imgChangeEvt = event;
-  // }
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.capturedImage = reader.result != null ? reader.result.toString():"";
+      this.display = "block";
+    }
+      
+   
+  }
   cropImg(e: ImageCroppedEvent) {
     this.cropImgPreview = e.base64;
   }
@@ -25,6 +33,7 @@ export class AppComponent {
   public camImage!: WebcamImage;
   private nextWebcam: Subject<any> = new Subject();
   capturedImage = '';
+  display = "none";
   ngOnInit() {
     console.log("cropImgPreview" + this.cropImgPreview);
   }
@@ -35,10 +44,9 @@ export class AppComponent {
     // this.webcamImage = webcamImage;
     this.capturedImage = camImage!.imageAsDataUrl;
     this.imgChangeEvt = this.capturedImage;
-    console.log("IsCapture : " + this.IsCapture);
     if (camImage!.imageAsDataUrl != null || camImage!.imageAsDataUrl != undefined)
       this.IsCapture = false;
-    console.log("IsCapture after : " + this.IsCapture);
+    this.display = "block";
     // this.trigger.complete();
   }
   public get invokeObservable(): Observable<any> {
@@ -47,4 +55,16 @@ export class AppComponent {
   public get nextWebcamObservable(): Observable<any> {
     return this.nextWebcam.asObservable();
   }
+  onCloseHandled() {
+    this.display = "none";
+  }
+
+//   handleUpload(event : any):any{
+//     const file = event.target.files[0];
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       return  reader.result;
+//     }
+// }
 }

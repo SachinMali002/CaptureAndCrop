@@ -1,20 +1,26 @@
 <div class="container mt-5 text-center">
-  <div id="exampleModalLong">
-    <!-- <div class="col-md-12">
+  <!-- <div class="col-md-12">
       <input type="file" (change)="onFileChange($event)" />
     </div> -->
-    <div class="row">
-      <div class="col col-md-8 border-end">
-        <image-cropper [imageBase64]="this.capturedImage" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
-          [resizeToWidth]="256" format="png" (imageCropped)="cropImg($event)">
-        </image-cropper>
-        <!-- (imageLoaded)="LoadImage()"
+  <div class="modal" id="exampleModalLong" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-body">
+      <div class="modal-content">
+        <div class="row">
+          <div class="col col-8 border-end">
+            <image-cropper [imageBase64]="this.capturedImage" [maintainAspectRatio]="true" [aspectRatio]="4 / 4"
+              [resizeToWidth]="256" format="png" (imageCropped)="cropImg($event)">
+            </image-cropper>
+            <!-- (imageLoaded)="LoadImage()"
     (cropperReady)="initiatCrop()" 
     (loadImageFailed)="failedCapture()" -->
+          </div>
+          <div class="col col-4" *ngIf="this.cropImgPreview !=''">
+            <h6>Preview</h6>
+            <img [src]="cropImgPreview" class="img-fluid justify-content-center" />
+          </div>
+        </div>
       </div>
-      <div class="col col-md-4" *ngIf="this.cropImgPreview !=''">
-        <h6>Preview</h6>
-        <img [src]="cropImgPreview" />
       </div>
     </div>
   </div>
@@ -25,10 +31,32 @@
     <div class="col-md-12">
       <webcam [trigger]="invokeObservable" (imageCapture)="captureImg($event)"></webcam>
     </div>
-    <div class="col-md-12">
-      <button class="btn btn-danger" (click)="captureImage()" data-target="#exampleModalLong">
-        {{BtnCapture}}
-      </button>
+    <div class="row">
+      <div class="col-auto">
+        <button class="btn btn-danger" (click)="captureImage()" data-target="#exampleModalLong">
+          <!-- data-toggle="modal" data-target="#myModal" -->
+          {{BtnCapture}}
+        </button>
+      </div>
+      <div class="col-3">
+        <input type="file" id="uploadSignature" (change)="onFileChange($event)" class="form-control" data-target="#exampleModalLong"/>
+      </div>
     </div>
   </div>
+
+
+  <!-- <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">Modal Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+   -->
 </div>
